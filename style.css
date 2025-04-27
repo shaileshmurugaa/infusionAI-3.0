@@ -1,37 +1,53 @@
-/* Background and Fonts */
+/* Global Body Styles */
 body {
-    background-color: #f1f8e9;
-    font-family: 'Poppins', sans-serif;
+    background-color: #f0f9ff;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-/* Titles */
-h1, h2, h3 {
-    color: #2e7d32;
-    font-family: 'Poppins', sans-serif;
+/* Title Styling */
+h1 {
+    color: #228B22;
+    text-align: center;
+    font-size: 2.5em;
+    margin-top: 20px;
 }
 
-/* Input Text Box */
-input {
-    border: 2px solid #81c784;
-    border-radius: 8px;
+/* Streamlit Chat Input Box */
+.stTextInput input {
+    border: 2px solid #228B22;
     padding: 10px;
+    font-size: 1.2em;
+    border-radius: 8px;
 }
 
-/* Spinner Color */
-.css-1v0mbdj {
-    color: #66bb6a !important;
+/* Streamlit Chat Output Box */
+.stChatMessage.assistant {
+    background-color: #228B22;
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    max-width: 70%;
+    margin-bottom: 10px;
 }
 
-/* Success Message */
-.css-1cpxqw2 {
-    background-color: #e8f5e9;
-    color: #2e7d32;
+.stChatMessage.user {
+    background-color: #e1f5d2;
+    color: black;
+    padding: 12px;
+    border-radius: 8px;
+    max-width: 70%;
+    margin-bottom: 10px;
 }
 
-/* Footer */
-hr {
-    border: 0;
-    height: 1px;
-    background: #a5d6a7;
-    margin: 2em 0;
+/* Lottie Animation Container */
+.stLottie {
+    display: block;
+    margin: 0 auto;
+}
+
+/* Add some padding around the app */
+.stApp {
+    padding: 20px;
 }
