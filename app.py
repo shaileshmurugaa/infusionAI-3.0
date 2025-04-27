@@ -1,57 +1,57 @@
 import streamlit as st
-import openai
-from streamlit_lottie import st_lottie
 import requests
+from streamlit_lottie import st_lottie
 
-# Page configuration
-st.set_page_config(page_title="InfusionAI 3.0 - Farmer Chatbot", page_icon="🌾", layout="centered")
-
-# Load CSS
-with open("style.css") as f:
-    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-
-# OpenAI API Key from Streamlit Secrets
-openai.api_key = st.secrets["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"]
-
-# Function to load Lottie animation
+# Function to load Lottie animations
 def load_lottieurl(url):
     r = requests.get(url)
     if r.status_code != 200:
         return None
     return r.json()
 
-# Load an agriculture-themed animation
-lottie_farming = load_lottieurl("https://assets10.lottiefiles.com/packages/lf20_Cc8Bpg.json")
+# Load Lottie Animation
+lottie_animation = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_hzgq1iov.json")
 
-# Title Section with Animation
-st_lottie(lottie_farming, height=200, key="farming")
-st.title("🌾 InfusionAI 3.0 - Farmer Chatbot")
-st.subheader("Ask anything about farming, crops, or agriculture!")
+# Streamlit app UI
+st_lottie(lottie_animation, height=300)
+st.title("🚜 InfusionAI 3.0 — Farmer Chatbot")
 
-# Chatbot Function
-def farmer_chatbot(user_query):
-    system_message = {
-        "role": "system",
-        "content": "You are a helpful and friendly farming expert. Give simple, short, and practical farming advice. Use a friendly tone."
-    }
-    user_message = {
-        "role": "user",
-        "content": user_query
-    }
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[system_message, user_message]
-    )
-    return response['choices'][0]['message']['content']
+# Set up Gemini API Key (stored in Streamlit secrets)
+gemini_api_key = st.secrets["AIzaSyBhJszyHs6iH1oLAz2TNDCWuTRzjmC4344"]
 
-# User Input
-user_input = st.text_input("🌱 What would you like to ask:")
+# Gemini API URL
+gemini_api_url = "https://api.gemini.com/v1/assistant"  # Replace with actual Gemini API endpoint
 
-# Bot Response
+# Initialize session state for chat history
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+# Display chat history
+for msg in st.session_state.messages:
+    st.chat_message(msg["role"]).markdown(msg["content"])
+
+# Chat input
+user_input = st.chat_input("👨‍🌾 Ask your farming question:")
+
 if user_input:
-    with st.spinner('Thinking... 🚜💭'):
-        reply = farmer_chatbot(user_input)
-    st.success("🤖: " + reply)
+    # Add user message to history
+    st.session_state.messages.append({"role": "user", "content": user_input})
 
-# Footer
-st.markdown("<hr><center>Made with ❤️ for Farmers | Powered by InfusionAI 3.0</center>", unsafe_allow_html=True)
+    with st.spinner('Thinking... 🤔'):
+        # Make the request to Gemini API
+        response = requests.post(
+            gemini_api_url,
+            headers={"Authorization": f"Bearer {gemini_api_key}"},
+            json={"input": user_input}
+        )
+
+        if response.status_code == 200:
+            bot_reply = response.json().get("response", "Sorry, I couldn't get an answer.")
+        else:
+            bot_reply = "Error: Could not connect to Gemini API."
+
+    # Add bot reply to history
+    st.session_state.messages.append({"role": "assistant", "content": bot_reply})
+
+    # Display latest bot reply
+    st.chat_message("assistant").markdown(bot_reply)
