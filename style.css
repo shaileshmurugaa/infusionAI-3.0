@@ -1,0 +1,37 @@
+/* Background and Fonts */
+body {
+    background-color: #f1f8e9;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Titles */
+h1, h2, h3 {
+    color: #2e7d32;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Input Text Box */
+input {
+    border: 2px solid #81c784;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+/* Spinner Color */
+.css-1v0mbdj {
+    color: #66bb6a !important;
+}
+
+/* Success Message */
+.css-1cpxqw2 {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+/* Footer */
+hr {
+    border: 0;
+    height: 1px;
+    background: #a5d6a7;
+    margin: 2em 0;
+}
